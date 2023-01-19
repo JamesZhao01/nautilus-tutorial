@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ... # put a pvc name like yash-data or smth
+spec:
+  storageClassName: rook-cephfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi

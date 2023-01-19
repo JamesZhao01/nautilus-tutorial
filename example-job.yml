@@ -1,0 +1,85 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: j-job-decay
+  namespace: guru-research
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - perfsonar.csusb.edu
+                      - prp-gpu-3.t2.ucsd.edu
+      containers:
+      - name: demo
+        image: cyoung02/smart:latest
+        command: ["/bin/bash"]
+        # runs the golden 5
+        args: 
+        - "-c"
+        - >- 
+          cd /workspace &&
+          git clone https://jameszhao01:${PAT}@github.com/Cyoung02/smart4.5.git &&
+          chmod u+x -R /workspace/smart4.5/scripts &&
+          /workspace/smart4.5/scripts/pull_dataset.sh hyun_fp_data.zip && 
+          /workspace/smart4.5/scripts/pull_dataset.sh hyun_pair_ranking_set_07_22.zip && 
+          cd /workspace/smart4.5 &&
+          folder=decay_exp
+          &&
+          python train_ranker_transformer.py double_transformer --epochs 300 --lr 1e-5 --expname j_decay_0 --foldername $folder --datasrc hsqc_ms_pairs --bs 128
+          --num_hidden 2 --fc_dim 256 --dropout 0.3  --pos_weight 1.0 --weight_decay 0.0
+          --hsqc_layers 8 --hsqc_heads 8 --hsqc_dim_model 256 --hsqc_dim_coords 112,112,32
+          --ms_layers 8 --ms_heads 8 --ms_dim_model 256 --ms_dim_coords 128,128
+          &&
+          python train_ranker_transformer.py double_transformer --epochs 300 --lr 1e-5 --expname j_decay_0 --foldername $folder --datasrc hsqc_ms_pairs --bs 128
+          --num_hidden 2 --fc_dim 256 --dropout 0.3  --pos_weight 1.0 --weight_decay 1e-5
+          --hsqc_layers 8 --hsqc_heads 8 --hsqc_dim_model 256 --hsqc_dim_coords 112,112,32
+          --ms_layers 8 --ms_heads 8 --ms_dim_model 256 --ms_dim_coords 128,128
+          &&
+          python train_ranker_transformer.py double_transformer --epochs 300 --lr 1e-5 --expname j_decay_0 --foldername $folder --datasrc hsqc_ms_pairs --bs 128
+          --num_hidden 2 --fc_dim 256 --dropout 0.3  --pos_weight 1.0 --weight_decay 1e-4
+          --hsqc_layers 8 --hsqc_heads 8 --hsqc_dim_model 256 --hsqc_dim_coords 112,112,32
+          --ms_layers 8 --ms_heads 8 --ms_dim_model 256 --ms_dim_coords 128,128
+          &&
+          python train_ranker_transformer.py double_transformer --epochs 300 --lr 1e-5 --expname j_decay_0 --foldername $folder --datasrc hsqc_ms_pairs --bs 128
+          --num_hidden 2 --fc_dim 256 --dropout 0.3  --pos_weight 1.0 --weight_decay 1e-3
+          --hsqc_layers 8 --hsqc_heads 8 --hsqc_dim_model 256 --hsqc_dim_coords 112,112,32
+          --ms_layers 8 --ms_heads 8 --ms_dim_model 256 --ms_dim_coords 128,128
+        volumeMounts:
+          - name: james-shared
+            mountPath: /data
+          - name: dshm
+            mountPath: /dev/shm
+        resources:
+          limits:
+            memory: 16Gi
+            cpu: "2"
+            nvidia.com/gpu: "1"
+          requests:
+            memory: 16Gi
+            cpu: "2"
+            nvidia.com/gpu: "1"
+        env:
+          - name: PAT
+            valueFrom:
+              secretKeyRef:
+                name: jz-secret
+                key: pat
+                optional: false
+      volumes:
+        - name: james-shared
+          persistentVolumeClaim:
+            claimName: james-shared
+        - name: dshm
+          emptyDir:
+            medium: Memory
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: gitlab-auth
+  backoffLimit: 0 # set this to 0 if you don't want it to auto-retry

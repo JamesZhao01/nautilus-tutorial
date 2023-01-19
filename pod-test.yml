@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ... # put a pod name like yash-test or smth
+  namespace: guru-research
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                  # <== If you ever have nodes giving you issues, add them here to 
+                  # exclude them==>
+                  - perfsonar.csusb.edu 
+                  - nrp-c5.nysernet.org
+  containers:
+    - name: demo
+      image: alpine/git
+      command: ["/bin/sh"]
+      args:
+        [
+          "-c",
+          # <== ONLY USE SLEEP INFINITY FOR PODS ==>
+          # <== DO NOT USE THEM FOR JOBS OR YOU WILL PROBABLY BE YELLED AT ==>
+          "sleep infinity",
+        ]
+      volumeMounts:
+        - name: ...
+          mountPath: /data
+        - name: dshm
+          mountPath: /dev/shm
+      resources:
+        limits:
+          memory: 12Gi
+          cpu: "2"
+          nvidia.com/gpu: "1"
+        requests:
+          memory: 12Gi
+          cpu: "2"
+          nvidia.com/gpu: "1"
+  volumes:
+    - name: ... # I use the same names here for simplicity
+      persistentVolumeClaim:
+        claimName: ...
+    - name: dshm
+      emptyDir:
+        medium: Memory
