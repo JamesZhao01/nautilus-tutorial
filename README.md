@@ -2,11 +2,12 @@
 
 ## Useful Links
 - https://portal.nrp-nautilus.io/
+- https://ucsd-prp.gitlab.io/ (official nautilus docs)
 - Element (tech support) https://ucsd-prp.gitlab.io/userdocs/start/contact/
 
 # Initial Setup
 
-1. Have Martha(mgahl@eng.ucsd.edu) add you to the Nautilus whitelist 
+1. Have Martha (mgahl@eng.ucsd.edu) add you to the Nautilus whitelist 
 2. Create a ~/.kube directory
 3. Get a kubernetes config from (https://portal.nrp-nautilus.io/)
   - Click Login -> Google -> (login to your ucsd with google) -> Get Config
