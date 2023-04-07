@@ -63,7 +63,7 @@ The above configs can probably get you pretty far. You probably want to create y
 # Development
 - I use visual studio code's Kubernetes extension with Remove Development to ssh into pods. They make it very easy to perform, and you get a lot of QOL benefits like auto-port forwarding (e.x. running tensorboard in your pod), all of your extensions (you will have to reinstall the Python extensions though within your pod).
 - Install the Kubernetes and Remote Development Extension Pack
-  - Click the Kubernetes button (looks like a web in a heptagon) -> And open the dropdowns (nautilus -> Workloads -> Pods -> <your pod>)
+  - Click the Kubernetes button (looks like a web in a heptagon) -> And open the dropdowns (nautilus -> Workloads -> Pods -> **your pod**)
   - Right click the pod -> Attach Visual Studio Code, and a new window will pop up ssh'd into your pod!
   - In the new window, Open a folder (Ctrl+Shift+P and search "Open Folder"), choose your working directory, and happy coding!
 
