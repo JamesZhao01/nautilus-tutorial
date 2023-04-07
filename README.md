@@ -60,6 +60,13 @@ If you are cloning a private repo, you might need an ssh config or a PAT. You ca
 The above configs can probably get you pretty far. You probably want to create your own docker image and host it on docker hub or something with whatever dependencies you use. Probably base it off a pytorch-cuda image or something
 - Pods only last 6 hours and I usually only use them as a dev environment with a gpu
 
+# Development
+- I use visual studio code's Kubernetes extension with Remove Development to ssh into pods. They make it very easy to perform, and you get a lot of QOL benefits like auto-port forwarding (e.x. running tensorboard in your pod), all of your extensions (you will have to reinstall the Python extensions though within your pod).
+- Install the Kubernetes and Remote Development Extension Pack
+  - Click the Kubernetes button (looks like a web in a heptagon) -> And open the dropdowns (nautilus -> Workloads -> Pods -> <your pod>)
+  - Right click the pod -> Attach Visual Studio Code, and a new window will pop up ssh'd into your pod!
+  - In the new window, Open a folder (Ctrl+Shift+P and search "Open Folder"), choose your working directory, and happy coding!
+
 # Jobs
 Jobs are very similar to pods, except you are allowed to allocate more RAM (pods have <12 GB requirement) and can last longer than 6 hours. I've added an example job config, that uses a multi-line yaml command if you want to run many experiments with lots of cli args. It also has some configs for loading secrets as enviornment variables (I have removd my PAT though ＼ʕ •ᴥ•ʔ／ ). 
 
