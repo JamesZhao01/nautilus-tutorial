@@ -47,6 +47,7 @@ To create a persistent volume, I gave you a yaml file (`persistent-volume.yml`) 
 - I think this command should work, I don't want to test it in case it overrides my current volume 😞
 - `kubectl apply -f persistent-volume.yml`
 - [docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
+- In general, you should put datasets on your volume, but copy your datasets to your container when using it. This is because you will be repeatedly loading your data, and because it will be on a NFS, it will be slow to access. Better to do one expensive copy at once than millions of slow copies when training. 
 
 Poggers, time to test with
 - `kubectl create -f pod-test.yml`
