@@ -5,6 +5,9 @@
 - https://ucsd-prp.gitlab.io/ (official nautilus docs)
 - Element (tech support) https://ucsd-prp.gitlab.io/userdocs/start/contact/
 
+# !!!Important!!!
+- Please read [The User Guide](https://ucsd-prp.gitlab.io/) before making an account so you know how Nautilus works. Feel free to ask any questions. It is important to use it properly since admins will get mad if you use it wrong, and it is shared with many other universities and groups. 
+
 # Initial Setup
 
 1. Have ~~Martha (mgahl@eng.ucsd.edu)~~ Me(James Zhao, jjz005@ucsd.edu as of April 2023) add you to the Nautilus whitelist 
