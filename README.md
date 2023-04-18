@@ -21,7 +21,7 @@
     ```
     Error from server (Forbidden): namespaces is forbidden: User "http://cilogon.org/serverE/users/56166" cannot list resource "namespaces" in API group "" at the cluster scope
     ```
-    probably reach out to Martha or support on Element
+    probably reach out to ~~Martha~~ James or support on Element
 5. Switch to the ```guru-research``` namespace since other universities also use nautilus
   - `kubectl config set-context --current --namespace=guru-research`
 6. You should be able to do `kubectl get pods` to see all running pods of people in GURU (usually Shubham has some Lp-net stuff running, or people in SMART have some hsqc model. All of my experiments are prefixed by a `j` (e.x. `j-pod-lightning`))
