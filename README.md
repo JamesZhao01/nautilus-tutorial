@@ -10,7 +10,7 @@
 
 # Initial Setup
 
-1. Have ~~Martha (mgahl@eng.ucsd.edu)~~ Me(James Zhao, jjz005@ucsd.edu as of April 2023) add you to the Nautilus whitelist 
+1. Have ~~Martha (mgahl@eng.ucsd.edu)~~ ~~Me(James Zhao, jjz005@ucsd.edu as of April 2023)~~ whomever is nautilus admin add you to the Nautilus whitelist 
 2. Create a ~/.kube directory
 3. Get a kubernetes config from (https://portal.nrp-nautilus.io/)
   - Click Login -> Google -> (login to your ucsd with google) -> Get Config
