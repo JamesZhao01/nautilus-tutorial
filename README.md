@@ -5,6 +5,12 @@
 - https://ucsd-prp.gitlab.io/ (official nautilus docs)
 - Element (tech support) https://ucsd-prp.gitlab.io/userdocs/start/contact/
 
+## For future Nautilus admins:
+- https://ucsd-prp.gitlab.io/admindocs/cluster/cluster-user-mgmt/
+- A nautilus admin essentially only has to (1) whitelist users into the guru-research namespace, and (2) occasionally clean up stale persistent volumes (I never personally had to do this before, but Martha has done this a couple of times)
+  - you also should probs be able to onboard new members (aka show this tutorial)
+- reach out to me (jjz005@ucsd.edu, jjzhao2@andrew.cmu.edu) if you would like to be promoted to guru-research cluster admin
+
 # !!!Important!!!
 - Please read [The User Guide](https://ucsd-prp.gitlab.io/) before making an account so you know how Nautilus works. Feel free to ask any questions. It is important to use it properly since admins will get mad if you use it wrong, and it is shared with many other universities and groups. 
 
@@ -48,6 +54,7 @@ To create a persistent volume, I gave you a yaml file (`persistent-volume.yml`) 
 - `kubectl apply -f persistent-volume.yml`
 - [docs](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 - In general, you should put datasets on your volume, but copy your datasets to your container when using it. This is because you will be repeatedly loading your data, and because it will be on a NFS, it will be slow to access. Better to do one expensive copy at once than millions of slow copies when training. 
+- Edit: (as of June 2023) some of the other protocols / storage types may be more stable than cephfs. Recently, there have been many instances of the cephfs manager pod dying spontaneously, rendering access to a pvc impossible for stretches of time. Some of the s3 protocols might be better. 
 
 Poggers, time to test with
 - `kubectl create -f pod-test.yml`
